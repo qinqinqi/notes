@@ -46,6 +46,7 @@ jquery实现无new构建的方式
 ​	在ECMAScript中，创建函数最常用的两个方法就是函数表达式和函数声明。在ECMA规范中只明确了一点：函数声明必须带有标识符（函数名称），而函数表达式可以省略。
 
 ```javascript
+//定义了一个匿名自执行函数
 (function(window, undefined) {
   /...
 })(window)
