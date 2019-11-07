@@ -6,13 +6,12 @@ jq的核心就是从HTML文档中匹配元素并对其进行操作
 
 ```javascript
 
-无new构造
+//无new构造
 $(".test").text("这是一段测试文本！");
 
 使用new构建
 var test = new $(".test");
 test.text("这是一段测试文本！");
-
 ```
 
 
@@ -20,7 +19,7 @@ test.text("这是一段测试文本！");
 jquery实现无new构建的方式
 
 ```javascript
-(function(window, undefined) {
+(function(window, undefi![5c2104a8ad7db039e85472f81a698fd](C:\Users\Administrator\Desktop\notes\随记\jQuery\源码解析\images\5c2104a8ad7db039e85472f81a698fd.png)ed) {
   var
   // ...
   jQuery = function(selector, context) {
@@ -55,7 +54,7 @@ jquery实现无new构建的方式
 
 
 
-### 2）原型---prototype
+### 2）原型
 
 ​	在js中，原型也是一个对象，通过原型可以实现对象的属性继承，js的对象中都包含一个“[[Prototype]]”内部属性，这个属性对应的即是该对象的原型。
 
@@ -110,9 +109,56 @@ jQuery.fn.init.prototype = jQuery.fn;
 
 
 
+![5c2104a8ad7db039e85472f81a698fd](C:\Users\Administrator\Desktop\notes\随记\jQuery\源码解析\images\5c2104a8ad7db039e85472f81a698fd.png)
+
+
+
 # 三、extend功能函数
 
 
 
+使用分为两种，一种是在外部使用，一种是在源码内部使用。不管哪种方式，传过去的第一个对象必须是一个object。
 
 
+
+**1.外部使用：**
+
+```javascript
+<script>
+
+	//任意对象扩展 参数必须是两个及以上
+	var obj = $.extend({},{name:"xiaoming"});
+	
+	//jquery本身扩展
+	$.extend({
+      work: function(){}
+	});
+	
+	//实例对象扩展
+	$.fn.extand({
+      sex:"男"
+	});
+	$().sex;
+</script>
+```
+
+
+
+**2.内部使用**
+
+
+
+# 四、扩展知识
+
+* 对象   百度搜索“js string”
+  * 内置对象   JavaScript语言提供的  
+  * 宿主对象   宿主环境提供
+  * 自定义对象   new + 构造函数()创造的
+
+
+
+* 浅拷贝和深拷贝
+  - 核心：引用类型和非引用类型的拷贝结构是不同的
+  - 区别：
+    - 浅拷贝只是拷贝基本类型的数据，如果父对象的属性等于数组或另一个对象，那么实际上，子对象获得的只是一个内存地址，因此存在父对象被篡改的可能，浅拷贝只复制指向某个对象的指针，而不复制对象本身，新旧对象还是共享同一款内存。
+    - 深拷贝就是能够实现真正意义上的数组和对象的拷贝。递归调用“浅拷贝”。（深拷贝会另外创造一个一模一样的对象，新对象跟原对象不共存内存，修改新对象不会改到原对象）
