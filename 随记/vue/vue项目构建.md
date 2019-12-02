@@ -58,11 +58,17 @@ vue-cli 是vue.[js](http://lib.csdn.net/base/javascript)的脚手架，用于自
 
 ## ③src文件夹
 
-​	这是大部分应用程序代码所在的位置。
+​	这是大部分应用程序代码所在的位置，里边有JS文件，有css文件，有vue文件，后期主要操作这个目录。
+
+* assets-----------------------资源目录，专门用于存放图片、css、定义js
+* components--------------专门用于存放vue组件
+* router------------------------vue的路由文件存放在这里
+* App.vue---------------------与main.js同时存在，是第一个入口组件，相当于所有组件的根组件，相当于以前基础页面里边的`<div id="app"></div>`
+* main.js----------------------最重要的文件夹，项目的起始文件，也是webpack的入口文件，整个程序从这个地方开始
 
 ## ④static文件夹
 
-​	不想使用Webpack进行处理的静态资产的一个逃生舱口。它们将直接复制到生成webpack建立的资产的同一个目录中。
+​	不想使用Webpack进行处理的静态资产的一个逃生舱口。它们将直接复制到生成webpack建立的资产的同一个目录中。只适合放一些自定义js文件。
 
 ## ⑤test/unit
 
@@ -81,6 +87,73 @@ vue-cli 是vue.[js](http://lib.csdn.net/base/javascript)的脚手架，用于自
 ## ⑧package.json
 
 ​	包含所有构建依赖项和构建命令的NPM软件包元文件，也可以在这里查看使用npm安装的插件。
+
+
+
+# 5.一些代码描述
+
+## ①、webpack.base.conf.js
+
+路径：build
+
+```javascript
+
+module.exports = {
+  ....
+  
+  resolve: {
+  	//设置拓展名，如果配置了这个，name在import导入的时候，就不用再写后缀名了
+  	//使用scss的时候，还可以加上.css 和 .scss
+    extensions: ['.js','.vue','.json'],
+    
+    //别名配置
+    alias: {
+    	//需要完整的含编译器的vue版本时才写vue$,但是我们实际引用vue的时候都是 import Vue from 'vue' 并没有走这个别名
+      'vue$': 'vue/dist/vue.esm.js',
+      //这里的@ 指的是路径 ../src ，在webpack.base.conf.js里就被封装了![5e2de4a9d520a5afdf5dae0ec3174d6](C:\Users\Administrator\Desktop\notes\随记\vue\images\5e2de4a9d520a5afdf5dae0ec3174d6.png)
+      '@': resolve('src'),
+    }
+  }
+  ...
+}
+
+```
+
+![5e2de4a9d520a5afdf5dae0ec3174d6](C:\Users\Administrator\Desktop\notes\随记\vue\images\5e2de4a9d520a5afdf5dae0ec3174d6.png)
+
+
+
+## ②、main.js
+
+路径： src
+
+```javascript
+//main.js
+import Vue from 'vue'
+import App from './App'
+import router from './router'
+/**
+*其实就是：import router from './router/index.js'
+*在使用webpack项目中，如果导入的是index.js，则可以省略
+*这里是相当于导入了一个路由
+*/
+
+//在生产环境里把注释全部去掉
+Vue.config.productionTip = false
+
+//是否启动代码质量检查，不要删除
+/* eslint-disable no-new */
+new Vue({
+  el: '#app',
+  router,
+  components: { App },
+  template: '<App/>'
+})
+```
+
+
+
+
 
 
 

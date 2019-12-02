@@ -2,6 +2,10 @@
 
 jq的核心就是从HTML文档中匹配元素并对其进行操作
 
+$ 就是jQuery的别称
+
+$() 就是在创建jQuery的实例对象
+
 ## 1.实例化jquery对象
 
 ```javascript
@@ -9,7 +13,7 @@ jq的核心就是从HTML文档中匹配元素并对其进行操作
 //无new构造
 $(".test").text("这是一段测试文本！");
 
-使用new构建
+//使用new构建
 var test = new $(".test");
 test.text("这是一段测试文本！");
 ```
@@ -19,7 +23,7 @@ test.text("这是一段测试文本！");
 jquery实现无new构建的方式
 
 ```javascript
-(function(window, undefi![5c2104a8ad7db039e85472f81a698fd](C:\Users\Administrator\Desktop\notes\随记\jQuery\源码解析\images\5c2104a8ad7db039e85472f81a698fd.png)ed) {
+(function(window, undefined) {
   var
   // ...
   jQuery = function(selector, context) {
@@ -45,7 +49,7 @@ jquery实现无new构建的方式
 ​	在ECMAScript中，创建函数最常用的两个方法就是函数表达式和函数声明。在ECMA规范中只明确了一点：函数声明必须带有标识符（函数名称），而函数表达式可以省略。
 
 ```javascript
-//定义了一个匿名自执行函数
+//定义了一个匿名自执行函数，可以防止污染全局变量
 (function(window, undefined) {
   /...
 })(window)
@@ -98,7 +102,7 @@ jQuery = function(selector, context){
 * 使用$("XXX")这种实例化方式，其内部调用的是return new jQuery.fn.init(selector, contaxt, rootjQuery)，也就是构造实例交给了jQuery.fn.init()方法来完成。
 * 将jQuery.fn.init的prototype属性设置成jQuery.fn，那么使用new jQuery.fn.init()生成的原型对象就是jQuery.fn，所以挂载到jQuery.fn上面的函数就相当于挂载到jQuery.fn.init()生成的jQuery对象上，所有使用new jQuery.fn.init()生成的对象也能够访问到jQuery.fn上的所有原型方法。
 * 实例化方法存在的一个关系链是：
-  * jQuery.fn.init.prototypr = jQuery.fn = jQuery.prototype;
+  * jQuery.fn.init.prototype = jQuery.fn = jQuery.prototype;
   * new jQuery.fn.init()相当于new jQuery();
   * jQuery()返回的是new jQuery.fn.init()，而var obj = new jQuery()
 
@@ -152,8 +156,8 @@ jQuery.fn.init.prototype = jQuery.fn;
 # 四、扩展知识
 
 * 对象   百度搜索“js string”
-  * 内置对象   JavaScript语言提供的  
-  * 宿主对象   宿主环境提供
+  * 内置对象   JavaScript语言提供的    (Array   Date等)
+  * 宿主对象   宿主环境提供  (Window Screen  History)
   * 自定义对象   new + 构造函数()创造的
 
 
@@ -163,3 +167,5 @@ jQuery.fn.init.prototype = jQuery.fn;
   - 区别：
     - 浅拷贝只是拷贝基本类型的数据，如果父对象的属性等于数组或另一个对象，那么实际上，子对象获得的只是一个内存地址，因此存在父对象被篡改的可能，浅拷贝只复制指向某个对象的指针，而不复制对象本身，新旧对象还是共享同一款内存。
     - 深拷贝就是能够实现真正意义上的数组和对象的拷贝。递归调用“浅拷贝”。（深拷贝会另外创造一个一模一样的对象，新对象跟原对象不共存内存，修改新对象不会改到原对象）
+
+  总之就是浅拷贝后的新对象值发生变化原对象也跟着变，深拷贝后的新对象发生改变原对象不会发生改变。

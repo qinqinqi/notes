@@ -10,7 +10,24 @@ https://www.cnblogs.com/PopularProdigal/p/7305234.html
 
 https://www.cnblogs.com/woniudada/p/7426114.html
 
-​	
+
+
+# 三、安装live-server
+
+实现热更新
+
+
+
+# 四、配置
+
+方便进行格式化
+
+{
+
+“editor.formatOnType”: true,
+"editor.formatOnSave" : true,
+
+}
 
 
 
