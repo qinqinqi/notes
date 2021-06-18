@@ -12,7 +12,7 @@ vue-cli 是vue.[js](http://lib.csdn.net/base/javascript)的脚手架，用于自
 
 ​	在安装vue的环境之前，安装NodeJS环境是必须的。可以使用node -v指令检查，需要保证安装了4.0版本以上的nodeJS环境。傻瓜式安装，直接下一步下一步
 
-## ②安装vue-cli
+## ②安装vue-cli2.0
 
 ​	使用指令:npm install -g vue-cli
 
